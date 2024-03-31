@@ -71,11 +71,15 @@ for x in range(NUMBER_OF_TESTS):
         h1_counter += 1
 
     text0.set_text(
-        f'Significance Level (α): {ALPHA * 100:.2f} % \nSample Size (n): {SAMPLE_SIZE}\n\n'
+        f'Significance Level (α): {ALPHA * 100:.2f} % \n'
         + f'T({ALPHA:.2f},df={SAMPLE_SIZE - 1}) Two-Tailed: {t_alpha:.6f}\n\n'
-        + f'Population Mean (μ): {POP_MEAN:.4f} \nPopulation Standard Deviation (σ): {POP_STD:.4f}\n\n'
-        + f'Sample Mean (x̄): {s_mean:.4f} \nSample Standard Deviation (s): {s_std:.4f}\n\n'
-        + f'H0 (μ=μ0) is TRUE: {h0_counter} (Correct)\nH1 (μ≠μ0) is TRUE: {h1_counter} (False positive)\n\n'
+        + f'Population Mean (μ): {POP_MEAN:.4f} \n'
+        + f'Population Standard Deviation (σ): {POP_STD:.4f}\n\n'
+        + f'Sample Size (n): {SAMPLE_SIZE}\n'
+        + f'Sample Mean (x̄): {s_mean:.4f} \n'
+        + f'Sample Standard Deviation (s): {s_std:.4f}\n\n'
+        + f'H0 (μ=μ0) is TRUE: {h0_counter} (Correct)\n'
+        + f'H1 (μ≠μ0) is TRUE: {h1_counter} (False positive)\n\n'
         + f'Actuall Type I Error Percent: {100 * h1_counter / 1000:.2f} %'
     )
 

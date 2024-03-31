@@ -27,12 +27,35 @@ dots, = ax.plot([], [], 'bo', alpha=1.0)
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines1 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines2 = ax.vlines([], [], [], color='r', alpha=1.0)
-fill = ax.fill([], [], alpha=0.4, hatch="X", color='lightblue')
+fill = ax.fill([], [], 'lightblue', [], [], 'lightblue', alpha=0.4, hatch="X")
 
 # Distribution
 ax.plot(POP_PROB_DENS_X, POP_PROB_DENS_Y)
 # Population Mean
 ax.vlines([POP_MEAN], [0], [POP_PROB_MAX], color='red', linestyle='dashed', linewidth=3)
+# Single Standard Deviation spread
+ax.vlines([
+    POP_MEAN - POP_STD,
+    POP_MEAN + POP_STD, 
+], [
+    0, 
+    0,
+], [
+    POP_PROB_MAX, 
+    POP_PROB_MAX
+], color='blue', linestyle='dashed', linewidth=2)
+# Single Standard Deviation area
+ax.fill([
+    POP_MEAN - POP_STD, 
+    POP_MEAN - POP_STD,
+    POP_MEAN + POP_STD,
+    POP_MEAN + POP_STD
+], [
+    0, 
+    POP_PROB_MAX,
+    POP_PROB_MAX,
+    0
+], alpha=0.4, hatch="\\\\", color='lightblue')
 
 h0_counter = 0
 h1_counter = 0
@@ -42,38 +65,40 @@ for x in range(NUMBER_OF_TESTS):
     s_mean = np.mean(sample)
     s_std = np.std(sample)
 
-    # https://en.wikipedia.org/wiki/97.5th_percentile_point
-    # Significance Level (α): 0.05
-    # Z-Value (two-tailed): +/- 1.96
-    # z_005 = 1.96
+    # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chi2.html
+    chi2_alpha_left = stats.chi2.ppf(1 - ALPHA/2, df=SAMPLE_SIZE-1) # alpha divide by 2 - two-tailed test LEFT
+    chi2_alpha_rght = stats.chi2.ppf(ALPHA/2, df=SAMPLE_SIZE-1) # alpha divide by 2 - two-tailed test RIGHT
 
-    # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html
-    z_alpha = stats.norm.ppf(1 - ALPHA/2) # alpha divide by 2 - two-tailed test
+    # https://www.itl.nist.gov/div898/handbook/eda/section3/eda358.htm
+    pop_std_left = math.sqrt((SAMPLE_SIZE - 1) * s_std**2 / chi2_alpha_left)
+    pop_std_rght = math.sqrt((SAMPLE_SIZE - 1) * s_std**2 / chi2_alpha_rght)
 
-    # Using Population Std Deviation
-    moe = z_alpha * POP_STD / math.sqrt(len(sample))
-
-    if (s_mean - moe) <= POP_MEAN and POP_MEAN <= (s_mean + moe):
+    if pop_std_left <= POP_STD and POP_STD <= pop_std_rght:
         h0_counter += 1
     else:
         h1_counter += 1
 
+    print(pop_std_left)
+    print(pop_std_rght)
+    print('POP_STD', POP_STD)
+
     text0.set_text(
         f'Significance Level (α): {ALPHA * 100:.2f} % \n'
-        + f'Z({ALPHA:.2f}) Two-Tailed: {z_alpha:.6f} \n\n'
-        + f'Population Mean (μ): {POP_MEAN:.4f} \n'
+        + f'χ²(α={ALPHA/2:.4f}, df={SAMPLE_SIZE-1}) Two-Tailed LEFT: {chi2_alpha_left:.6f} \n'
+        + f'χ²(α={1-ALPHA/2:.4f}, df={SAMPLE_SIZE-1}) Two-Tailed RIGHT: {chi2_alpha_rght:.6f} \n\n'
+        + f'Population Mean (μ): {POP_MEAN:.4f} \n' 
         + f'Population Standard Deviation (σ): {POP_STD:.4f}\n\n'
         + f'Sample Size (n): {SAMPLE_SIZE}\n'
         + f'Sample Mean (x̄): {s_mean:.4f} \n'
         + f'Sample Standard Deviation (s): {s_std:.4f}\n\n'
-        + f'H0 (μ=μ0) is TRUE: {h0_counter} (Correct)\n'
-        + f'H1 (μ≠μ0) is TRUE: {h1_counter} (False positive)\n\n'
+        + f'H0 (σ=σ0) is TRUE: {h0_counter} (Correct)\n'
+        + f'H1 (σ≠σ0) is TRUE: {h1_counter} (False positive)\n\n'
         + f'Actuall Type I Error Percent: {100 * h1_counter / 1000:.2f} %'
     )
 
-    # Sample Mean
-    vlines0.remove()
-    vlines0 = ax.vlines([s_mean], [0], [POP_PROB_MAX], color='green', linestyle='dashed', linewidth=3)
+    # # Sample Mean
+    # vlines0.remove()
+    # vlines0 = ax.vlines([s_mean], [0], [POP_PROB_MAX], color='green', linestyle='dashed', linewidth=3)
 
     # Dashed Lines
     # vlines1.remove()
@@ -84,28 +109,46 @@ for x in range(NUMBER_OF_TESTS):
     # Confidence Interval
     vlines2.remove()
     vlines2 = ax.vlines([
-            s_mean - moe, 
-            s_mean + moe
+            POP_MEAN - pop_std_left, 
+            POP_MEAN - pop_std_rght,
+            POP_MEAN + pop_std_left, 
+            POP_MEAN + pop_std_rght
         ], [
             0, 
+            0,
+            0,
             0
         ], [
+            POP_PROB_MAX, 
+            POP_PROB_MAX,
             POP_PROB_MAX, 
             POP_PROB_MAX
         ], color='blue', linestyle='dashed', linewidth=1)
 
     fill[0].remove()
+    fill[1].remove()
     fill = ax.fill([
-            s_mean - moe, 
-            s_mean - moe,
-            s_mean + moe,
-            s_mean + moe
+            POP_MEAN + pop_std_left, 
+            POP_MEAN + pop_std_left,
+            POP_MEAN + pop_std_rght,
+            POP_MEAN + pop_std_rght
         ], [
             0, 
             POP_PROB_MAX,
             POP_PROB_MAX,
             0
-        ], alpha=0.4, hatch="//", color='lightblue')
+        ], 'lightgreen', [
+            POP_MEAN - pop_std_left, 
+            POP_MEAN - pop_std_left,
+            POP_MEAN - pop_std_rght,
+            POP_MEAN - pop_std_rght
+        ], [
+            0, 
+            POP_PROB_MAX,
+            POP_PROB_MAX,
+            0
+        ], 'lightgreen', alpha=0.4, hatch="//", edgecolor='lightgreen'
+    )
 
     (x < 50 or x == NUMBER_OF_TESTS - 1) and (plt.tight_layout() or plt.pause(0.5))
 

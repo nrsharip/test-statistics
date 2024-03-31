@@ -65,11 +65,15 @@ for i, x in enumerate(stats.binom.rvs(size=NUMBER_OF_TESTS, n = S_SIZE, p = P_PR
         h1_counter += 1
 
     text0.set_text(
-        f'Significance Level (α): {ALPHA * 100:.2f} %  \nZ({ALPHA:.2f}) Two-Tailed: {z_alpha:.6f}\n\n'
-        + f'Population Size : {P_SIZE} \nPopulation Proportion (p0): {P_PROPORTION:.4f} \n\n'
-        + f'Sample Size : {S_SIZE} \nSample Proportion (p̄): {s_proportion:.4f} \n\n'
+        f'Significance Level (α): {ALPHA * 100:.2f} % \n' 
+        + f'Z({ALPHA:.2f}) Two-Tailed: {z_alpha:.6f}\n\n'
+        + f'Population Size : {P_SIZE} \n'
+        + f'Population Proportion (p0): {P_PROPORTION:.4f} \n\n'
+        + f'Sample Size : {S_SIZE} \n'
+        + f'Sample Proportion (p̄): {s_proportion:.4f} \n\n'
         + f'Margin of Error (MOE): {moe:.4f} \n\n'
-        + f'H0 (p̄=p0) is TRUE: {h0_counter} (Correct)\nH1 (p̄≠p0) is TRUE: {h1_counter} (False positive)\n\n'
+        + f'H0 (p̄=p0) is TRUE: {h0_counter} (Correct)\n'
+        + f'H1 (p̄≠p0) is TRUE: {h1_counter} (False positive)\n\n'
         + f'Actuall Type I Error Percent: {100 * h1_counter / 1000:.2f} %'
     )
 

@@ -9,7 +9,7 @@ import math
 
 ALPHA = 0.05
 P_SIZE = 10000
-S_SIZE = 1000 # 40 200 1000
+S_SIZE = 40 # 40 200 1000
 P_PROPORTION = 0.2
 NUMBER_OF_TESTS = 1000
 
@@ -26,7 +26,8 @@ SAM_PROB_DENS_X = np.array(SAM_PROB_DENS_X) / S_SIZE
 SAM_PROB_MAX = stats.binom.pmf(S_SIZE * P_PROPORTION, n = S_SIZE, p = P_PROPORTION)
 
 # PROB_MAX = max(POP_PROB_MAX, SAM_PROB_MAX)
-PROB_MAX = POP_PROB_MAX
+# PROB_MAX = POP_PROB_MAX
+PROB_MAX = SAM_PROB_MAX
 
 fig, ax = plt.subplots(1, 1)
 ax.grid(axis='both', linestyle='--', color='0.95')
@@ -36,14 +37,14 @@ ax.yaxis.set_major_locator(ticker.MultipleLocator(PROB_MAX * 0.1))
 # ax.set_ylim(-0.2, 0.2)
 # ax.set_yscale("log")
 
-text0 = ax.text(1.25 * P_PROPORTION, PROB_MAX * 0.5, f'', fontsize=12)
+text0 = ax.text(1.75 * P_PROPORTION, PROB_MAX * 0.5, f'', fontsize=12)
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines2 = ax.vlines([], [], [], color='r', alpha=1.0)
 fill = ax.fill([], [], alpha=0.4, hatch="X", color='lightblue')
 
 # Distribution
-ax.plot(POP_PROB_DENS_X, POP_PROB_DENS_Y, marker='o', linestyle='dashed', alpha=1.0, linewidth=2.0)
-# ax.plot(SAM_PROB_DENS_X, SAM_PROB_DENS_Y, marker='o', linestyle='dashed', alpha=1.0, linewidth=2.0, color='g')
+# ax.plot(POP_PROB_DENS_X, POP_PROB_DENS_Y, marker='o', linestyle='dashed', alpha=1.0, linewidth=2.0)
+ax.plot(SAM_PROB_DENS_X, SAM_PROB_DENS_Y, marker='o', linestyle='dashed', alpha=1.0, linewidth=2.0)
 # Population Mean
 ax.vlines([P_PROPORTION], [0], [PROB_MAX], color='red', linestyle='dashed', linewidth=3)
 

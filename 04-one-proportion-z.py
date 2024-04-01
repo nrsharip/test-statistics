@@ -32,7 +32,7 @@ PROB_MAX = SAM_PROB_MAX
 fig, ax = plt.subplots(1, 1)
 ax.grid(axis='both', linestyle='--', color='0.95')
 ax.xaxis.set_major_locator(ticker.MultipleLocator(0.05))
-ax.set_xlim(-0.1, 0.5)
+ax.set_xlim(-0.1, 1.1)
 ax.yaxis.set_major_locator(ticker.MultipleLocator(PROB_MAX * 0.1))
 # ax.set_ylim(-0.2, 0.2)
 # ax.set_yscale("log")
@@ -75,7 +75,7 @@ for i, x in enumerate(stats.binom.rvs(size=NUMBER_OF_TESTS, n = S_SIZE, p = P_PR
         + f'Margin of Error (MOE): {moe:.4f} \n\n'
         + f'H0 (p̄=p0) is TRUE: {h0_counter} (Correct)\n'
         + f'H1 (p̄≠p0) is TRUE: {h1_counter} (False positive)\n\n'
-        + f'Actuall Type I Error Percent: {100 * h1_counter / 1000:.2f} %'
+        + f'Actuall Type I Error Percent: {100 * h1_counter / NUMBER_OF_TESTS:.2f} %'
     )
 
     # Sample Mean

@@ -75,7 +75,7 @@ for i, x in enumerate(stats.binom.rvs(size=NUMBER_OF_TESTS, n = S_SIZE, p = P_PR
         + f'Margin of Error (MOE): {moe:.4f} \n\n'
         + f'H0 (p̄=p0) is TRUE: {h0_counter} (Correct)\n'
         + f'H1 (p̄≠p0) is TRUE: {h1_counter} (False positive)\n\n'
-        + f'Actuall Type I Error Percent: {100 * h1_counter / NUMBER_OF_TESTS:.2f} %'
+        + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
     )
 
     # Sample Mean

@@ -93,7 +93,7 @@ for x in range(NUMBER_OF_TESTS):
         + f'Sample Standard Deviation (s): {s_std:.4f}\n\n'
         + f'H0 (σ=σ0) is TRUE: {h0_counter} (Correct)\n'
         + f'H1 (σ≠σ0) is TRUE: {h1_counter} (False positive)\n\n'
-        + f'Actuall Type I Error Percent: {100 * h1_counter / NUMBER_OF_TESTS:.2f} %'
+        + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
     )
 
     # # Sample Mean

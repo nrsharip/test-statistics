@@ -5,6 +5,9 @@ import numpy as np
 import pandas as pd
 import math
 
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
 ALPHA = 0.05
 
 NUMBER_OF_TESTS = 1000
@@ -148,13 +151,30 @@ for x in range(NUMBER_OF_TESTS):
     else:
         h1_counter += 1
 
+    df = pd.DataFrame(
+        data = [{'Sample': 'sample 1', 'Value': value} for value in sample1] 
+        + [{'Sample': 'sample 2', 'Value': value} for value in sample2]
+        + [{'Sample': 'sample 3', 'Value': value} for value in sample3]
+        + [{'Sample': 'sample 4', 'Value': value} for value in sample4],
+        columns=['Sample', 'Value']
+    )
+
+    model = smf.ols('Value ~ Sample', data=df).fit()
+    table = sm.stats.anova_lm(model)
+    # Uncomment for more details
+    # print(table)
+
+    scipy_res = stats.f_oneway(sample1, sample2, sample3, sample4)
+
     text0.set_text(
         f'Significance Level (α): {ALPHA * 100:.2f} % \n'
         + f'F({ALPHA/2:.4f}, d1={K - 1}, d2={N - K}) Two-Tailed Left: {f_alpha_left:.6f} \n'
         + f'F({1-ALPHA/2:.4f}, d1={K - 1}, d2={N - K}) Two-Tailed Right: {f_alpha_rght:.6f} \n\n'
-        + f'S I - squared: {S_I_squared:.4f}\n'
-        + f'S II - squared: {S_II_squared:.4f}\n\n'
+        + f'S I - squared (Residual): {S_I_squared:.4f}\n'
+        + f'S II - squared (Sample): {S_II_squared:.4f}\n\n'
         + f'Ratio: {ratio:.6f}\n\n'
+        + f'SciPy F-Statistic: {scipy_res.statistic:.6f}\n'
+        + f'SciPy p-value: {scipy_res.pvalue:.6f}\n\n'
         + f'H0 (μ1=μ2=μ3=μ4) is TRUE: {h0_counter} (Correct)\n'
         + f'H1 (∃i,j,i≠j: μi≠μj) is TRUE: {h1_counter} (False positive)\n\n'
         + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'

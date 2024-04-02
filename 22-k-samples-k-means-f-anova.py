@@ -25,7 +25,7 @@ POP_3_STD = 4
 SAMPLE_3_SIZE = 75
 
 POP_4_MEAN = 10
-POP_4_STD = 5
+POP_4_STD = 6
 SAMPLE_4_SIZE = 100
 
 N = SAMPLE_1_SIZE + SAMPLE_2_SIZE + SAMPLE_3_SIZE + SAMPLE_4_SIZE
@@ -60,7 +60,7 @@ ax[0].yaxis.set_major_locator(ticker.MultipleLocator(0.01))
 text0 = ax[0].text(POP_4_MEAN - 4.0*POP_4_STD, 0.1*POP_1_PROB_MAX, f'')
 dots1, = ax[0].plot([], [], 'bo', alpha=1.0)
 dots2, = ax[0].plot([], [], 'go', alpha=1.0)
-dots2, = ax[0].plot([], [], 'mo', alpha=1.0)
+dots3, = ax[0].plot([], [], 'mo', alpha=1.0)
 dots4, = ax[0].plot([], [], 'yo', alpha=1.0)
 
 vlines1 = ax[0].vlines([], [], [], color='r', alpha=1.0)
@@ -195,7 +195,7 @@ for x in range(NUMBER_OF_TESTS):
         # Dots
         dots1.set_data(sample1, stats.norm.pdf(sample1, loc = POP_1_MEAN, scale = POP_1_STD))
         dots2.set_data(sample2, stats.norm.pdf(sample2, loc = POP_2_MEAN, scale = POP_2_STD))
-        dots2.set_data(sample3, stats.norm.pdf(sample3, loc = POP_3_MEAN, scale = POP_3_STD))
+        dots3.set_data(sample3, stats.norm.pdf(sample3, loc = POP_3_MEAN, scale = POP_3_STD))
         dots4.set_data(sample4, stats.norm.pdf(sample4, loc = POP_4_MEAN, scale = POP_4_STD))
 
         # Confidence Interval

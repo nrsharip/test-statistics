@@ -57,6 +57,10 @@ ax.fill([
     0
 ], alpha=0.4, hatch="\\\\", color='lightblue')
 
+# https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chi2.html
+chi2_alpha_left = stats.chi2.ppf(1 - ALPHA/2, df=SAMPLE_SIZE-1) # alpha divide by 2 - two-tailed test LEFT
+chi2_alpha_rght = stats.chi2.ppf(ALPHA/2, df=SAMPLE_SIZE-1) # alpha divide by 2 - two-tailed test RIGHT
+
 h0_counter = 0
 h1_counter = 0
 for x in range(NUMBER_OF_TESTS):
@@ -64,10 +68,6 @@ for x in range(NUMBER_OF_TESTS):
     sample = stats.norm.rvs(size=SAMPLE_SIZE, loc = POP_MEAN, scale = POP_STD)
     s_mean = np.mean(sample)
     s_std = np.std(sample)
-
-    # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chi2.html
-    chi2_alpha_left = stats.chi2.ppf(1 - ALPHA/2, df=SAMPLE_SIZE-1) # alpha divide by 2 - two-tailed test LEFT
-    chi2_alpha_rght = stats.chi2.ppf(ALPHA/2, df=SAMPLE_SIZE-1) # alpha divide by 2 - two-tailed test RIGHT
 
     # https://www.itl.nist.gov/div898/handbook/eda/section3/eda358.htm
     pop_std_left = math.sqrt((SAMPLE_SIZE - 1) * s_std**2 / chi2_alpha_left)
@@ -77,10 +77,6 @@ for x in range(NUMBER_OF_TESTS):
         h0_counter += 1
     else:
         h1_counter += 1
-
-    print(pop_std_left)
-    print(pop_std_rght)
-    print('POP_STD', POP_STD)
 
     text0.set_text(
         f'Significance Level (α): {ALPHA * 100:.2f} % \n'

@@ -67,6 +67,7 @@ ax.vlines([P_1_PROPORTION], [0], [SAM_1_PROB_MAX], color='red', linestyle='dashe
 ax.vlines([P_2_PROPORTION], [0], [SAM_2_PROB_MAX], color='red', linestyle='dashed', linewidth=3)
 ax.vlines([P_1_PROPORTION - P_2_PROPORTION], [0], [PROB_MIN], color='red', linestyle='dashed', linewidth=3)
 
+# https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.binom.html
 binom_randoms = np.array([
     stats.binom.rvs(size=NUMBER_OF_TESTS, n = S_1_SIZE, p = P_1_PROPORTION),
     stats.binom.rvs(size=NUMBER_OF_TESTS, n = S_2_SIZE, p = P_2_PROPORTION)

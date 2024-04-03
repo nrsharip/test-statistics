@@ -65,51 +65,53 @@ for i, x in enumerate(stats.binom.rvs(size=NUMBER_OF_TESTS, n = S_SIZE, p = P_PR
     else:
         h1_counter += 1
 
-    text0.set_text(
-        f'Significance Level (α): {ALPHA * 100:.2f} % \n' 
-        + f'Z({ALPHA:.2f}) Two-Tailed: {z_alpha:.6f}\n\n'
-        + f'Population Size : {P_SIZE} \n'
-        + f'Population Proportion (p0): {P_PROPORTION:.4f} \n\n'
-        + f'Sample Size : {S_SIZE} \n'
-        + f'Sample Proportion (p̄): {s_proportion:.4f} \n\n'
-        + f'Margin of Error (MOE): {moe:.4f} \n\n'
-        + f'H0 (p̄=p0) is TRUE: {h0_counter} (Correct)\n'
-        + f'H1 (p̄≠p0) is TRUE: {h1_counter} (False positive)\n\n'
-        + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
-    )
+    if i < 50 or i == NUMBER_OF_TESTS - 1:
+        text0.set_text(
+            f'Significance Level (α): {ALPHA * 100:.2f} % \n' 
+            + f'Z({ALPHA:.2f}) Two-Tailed: {z_alpha:.6f}\n\n'
+            + f'Population Size : {P_SIZE} \n'
+            + f'Population Proportion (p0): {P_PROPORTION:.4f} \n\n'
+            + f'Sample Size : {S_SIZE} \n'
+            + f'Sample Proportion (p̄): {s_proportion:.4f} \n\n'
+            + f'Margin of Error (MOE): {moe:.4f} \n\n'
+            + f'H0 (p̄=p0) is TRUE: {h0_counter} (Correct)\n'
+            + f'H1 (p̄≠p0) is TRUE: {h1_counter} (False positive)\n\n'
+            + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
+        )
 
-    # Sample Mean
-    vlines0.remove()
-    vlines0 = ax.vlines([s_proportion], [0], [PROB_MAX], color='green', linestyle='dashed', linewidth=3)
+        # Sample Mean
+        vlines0.remove()
+        vlines0 = ax.vlines([s_proportion], [0], [PROB_MAX], color='green', linestyle='dashed', linewidth=3)
 
-    # Confidence Interval
-    vlines2.remove()
-    vlines2 = ax.vlines([
-            s_proportion - moe, 
-            s_proportion + moe
-        ], [
-            0, 
-            0
-        ], [
-            PROB_MAX, 
-            PROB_MAX
-        ], color='blue', linestyle='dashed', linewidth=1)
+        # Confidence Interval
+        vlines2.remove()
+        vlines2 = ax.vlines([
+                s_proportion - moe, 
+                s_proportion + moe
+            ], [
+                0, 
+                0
+            ], [
+                PROB_MAX, 
+                PROB_MAX
+            ], color='blue', linestyle='dashed', linewidth=1)
 
-    fill[0].remove()
-    fill = ax.fill([
-            s_proportion - moe, 
-            s_proportion - moe,
-            s_proportion + moe,
-            s_proportion + moe
-        ], [
-            0, 
-            PROB_MAX,
-            PROB_MAX,
-            0
-        ], alpha=0.4, hatch="//", color='lightblue')
+        fill[0].remove()
+        fill = ax.fill([
+                s_proportion - moe, 
+                s_proportion - moe,
+                s_proportion + moe,
+                s_proportion + moe
+            ], [
+                0, 
+                PROB_MAX,
+                PROB_MAX,
+                0
+            ], alpha=0.4, hatch="//", color='lightblue')
 
 
-    (i < 50 or i == NUMBER_OF_TESTS - 1) and (plt.tight_layout() or plt.pause(0.5))
+        plt.tight_layout()
+        plt.pause(0.5)
 
 plt.tight_layout()
 plt.show()

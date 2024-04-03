@@ -114,7 +114,6 @@ for x in range(NUMBER_OF_TESTS):
         h1_counter += 1
 
     if x < 50 or x == NUMBER_OF_TESTS - 1:
-
         text0.set_text(
             f'Significance Level (α): {ALPHA * 100:.2f} % \n'
             + f'F(α={ALPHA/2:.4f}, d1={SAMPLE_1_SIZE - 1}, d2={SAMPLE_2_SIZE - 1}) Two-Tailed Left: {f_alpha_left:.6f} \n'

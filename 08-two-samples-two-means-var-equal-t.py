@@ -81,63 +81,65 @@ for x in range(NUMBER_OF_TESTS):
     else:
         h1_counter += 1
 
-    text0.set_text(
-        f'Significance Level (α): {ALPHA * 100:.2f} % \n'
-        + f'T({ALPHA:.2f},df={SAMPLE_1_SIZE + SAMPLE_2_SIZE - 2}) Two-Tailed: {t_alpha:.6f}\n\n'
-        + f'Population Mean (μ1): {POP_1_MEAN:.4f} \n'
-        + f'Population Mean (μ2): {POP_2_MEAN:.4f} \n'
-        + f'Population Standard Deviation (σ1): {POP_1_STD:.4f}\n\n'
-        + f'Population Standard Deviation (σ2): {POP_2_STD:.4f}\n\n'
-        + f'Sample Size 1 (n1): {SAMPLE_1_SIZE}\n'
-        + f'Sample Size 2 (n2): {SAMPLE_2_SIZE}\n'
-        + f'Sample Mean 1 (x̄1): {s1_mean:.4f} \n'
-        + f'Sample Mean 2 (x̄2): {s2_mean:.4f} \n'
-        + f'Sample Standard Deviation 1 (s1): {s1_std:.4f}\n'
-        + f'Sample Standard Deviation 2 (s2): {s2_std:.4f}\n\n'
-        + f'H0 (μ1-μ2={POP_1_MEAN - POP_2_MEAN:.2f}) is TRUE: {h0_counter} (Correct)\n'
-        + f'H1 (μ1-μ2≠{POP_1_MEAN - POP_2_MEAN:.2f}) is TRUE: {h1_counter} (False positive)\n\n'
-        + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
-    )
+    if x < 50 or x == NUMBER_OF_TESTS - 1:
+        text0.set_text(
+            f'Significance Level (α): {ALPHA * 100:.2f} % \n'
+            + f'T({ALPHA:.2f},df={SAMPLE_1_SIZE + SAMPLE_2_SIZE - 2}) Two-Tailed: {t_alpha:.6f}\n\n'
+            + f'Population Mean (μ1): {POP_1_MEAN:.4f} \n'
+            + f'Population Mean (μ2): {POP_2_MEAN:.4f} \n'
+            + f'Population Standard Deviation (σ1): {POP_1_STD:.4f}\n\n'
+            + f'Population Standard Deviation (σ2): {POP_2_STD:.4f}\n\n'
+            + f'Sample Size 1 (n1): {SAMPLE_1_SIZE}\n'
+            + f'Sample Size 2 (n2): {SAMPLE_2_SIZE}\n'
+            + f'Sample Mean 1 (x̄1): {s1_mean:.4f} \n'
+            + f'Sample Mean 2 (x̄2): {s2_mean:.4f} \n'
+            + f'Sample Standard Deviation 1 (s1): {s1_std:.4f}\n'
+            + f'Sample Standard Deviation 2 (s2): {s2_std:.4f}\n\n'
+            + f'H0 (μ1-μ2={POP_1_MEAN - POP_2_MEAN:.2f}) is TRUE: {h0_counter} (Correct)\n'
+            + f'H1 (μ1-μ2≠{POP_1_MEAN - POP_2_MEAN:.2f}) is TRUE: {h1_counter} (False positive)\n\n'
+            + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
+        )
 
-    # Sample Means
-    vlines0.remove()
-    vlines0 = ax.vlines([s1_mean], [0], [POP_1_PROB_MAX], color='blue', linestyle='dashed', linewidth=3)
-    vlines1.remove()
-    vlines1 = ax.vlines([s2_mean], [0], [POP_2_PROB_MAX], color='green', linestyle='dashed', linewidth=3)
-    vlines2.remove()
-    vlines2 = ax.vlines([s1_mean - s2_mean], [0], [min(POP_1_PROB_MAX, POP_2_PROB_MAX)], color='black', linestyle='dashed', linewidth=3)
+        # Sample Means
+        vlines0.remove()
+        vlines0 = ax.vlines([s1_mean], [0], [POP_1_PROB_MAX], color='blue', linestyle='dashed', linewidth=3)
+        vlines1.remove()
+        vlines1 = ax.vlines([s2_mean], [0], [POP_2_PROB_MAX], color='green', linestyle='dashed', linewidth=3)
+        vlines2.remove()
+        vlines2 = ax.vlines([s1_mean - s2_mean], [0], [min(POP_1_PROB_MAX, POP_2_PROB_MAX)], color='black', linestyle='dashed', linewidth=3)
 
-    # Dots
-    dots0.set_data(sample1, stats.t.pdf(sample1, df=SAMPLE_1_SIZE - 1, loc = POP_1_MEAN, scale = POP_1_STD))
-    dots1.set_data(sample2, stats.t.pdf(sample2, df=SAMPLE_2_SIZE - 1, loc = POP_2_MEAN, scale = POP_2_STD))
+        # Dots
+        dots0.set_data(sample1, stats.t.pdf(sample1, df=SAMPLE_1_SIZE - 1, loc = POP_1_MEAN, scale = POP_1_STD))
+        dots1.set_data(sample2, stats.t.pdf(sample2, df=SAMPLE_2_SIZE - 1, loc = POP_2_MEAN, scale = POP_2_STD))
 
-    # Confidence Interval
-    vlines3.remove()
-    vlines3 = ax.vlines([
-            (s1_mean - s2_mean) - moe, 
-            (s1_mean - s2_mean) + moe
-        ], [
-            0, 
-            0
-        ], [
-            min(POP_1_PROB_MAX, POP_2_PROB_MAX), 
-            min(POP_1_PROB_MAX, POP_2_PROB_MAX)
-        ], color='blue', linestyle='dashed', linewidth=1)
+        # Confidence Interval
+        vlines3.remove()
+        vlines3 = ax.vlines([
+                (s1_mean - s2_mean) - moe, 
+                (s1_mean - s2_mean) + moe
+            ], [
+                0, 
+                0
+            ], [
+                min(POP_1_PROB_MAX, POP_2_PROB_MAX), 
+                min(POP_1_PROB_MAX, POP_2_PROB_MAX)
+            ], color='blue', linestyle='dashed', linewidth=1)
 
-    fill[0].remove()
-    fill = ax.fill([
-            (s1_mean - s2_mean) - moe, 
-            (s1_mean - s2_mean) - moe,
-            (s1_mean - s2_mean) + moe,
-            (s1_mean - s2_mean) + moe
-        ], [
-            0, 
-            min(POP_1_PROB_MAX, POP_2_PROB_MAX),
-            min(POP_1_PROB_MAX, POP_2_PROB_MAX),
-            0
-        ], alpha=0.4, hatch="//", color='lightblue')
+        fill[0].remove()
+        fill = ax.fill([
+                (s1_mean - s2_mean) - moe, 
+                (s1_mean - s2_mean) - moe,
+                (s1_mean - s2_mean) + moe,
+                (s1_mean - s2_mean) + moe
+            ], [
+                0, 
+                min(POP_1_PROB_MAX, POP_2_PROB_MAX),
+                min(POP_1_PROB_MAX, POP_2_PROB_MAX),
+                0
+            ], alpha=0.4, hatch="//", color='lightblue')
 
-    (x < 50 or x == NUMBER_OF_TESTS - 1) and (plt.tight_layout() or plt.pause(0.5))
+        plt.tight_layout()
+        plt.pause(0.5)
 
 plt.tight_layout()
 plt.show()

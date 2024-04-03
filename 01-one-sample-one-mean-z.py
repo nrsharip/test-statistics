@@ -58,56 +58,58 @@ for x in range(NUMBER_OF_TESTS):
     else:
         h1_counter += 1
 
-    text0.set_text(
-        f'Significance Level (α): {ALPHA * 100:.2f} % \n'
-        + f'Z({ALPHA:.2f}) Two-Tailed: {z_alpha:.6f} \n\n'
-        + f'Population Mean (μ): {POP_MEAN:.4f} \n'
-        + f'Population Standard Deviation (σ): {POP_STD:.4f}\n\n'
-        + f'Sample Size (n): {SAMPLE_SIZE}\n'
-        + f'Sample Mean (x̄): {s_mean:.4f} \n'
-        + f'Sample Standard Deviation (s): {s_std:.4f}\n\n'
-        + f'H0 (μ=μ0) is TRUE: {h0_counter} (Correct)\n'
-        + f'H1 (μ≠μ0) is TRUE: {h1_counter} (False positive)\n\n'
-        + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
-    )
+    if x < 50 or x == NUMBER_OF_TESTS - 1:
+        text0.set_text(
+            f'Significance Level (α): {ALPHA * 100:.2f} % \n'
+            + f'Z({ALPHA:.2f}) Two-Tailed: {z_alpha:.6f} \n\n'
+            + f'Population Mean (μ): {POP_MEAN:.4f} \n'
+            + f'Population Standard Deviation (σ): {POP_STD:.4f}\n\n'
+            + f'Sample Size (n): {SAMPLE_SIZE}\n'
+            + f'Sample Mean (x̄): {s_mean:.4f} \n'
+            + f'Sample Standard Deviation (s): {s_std:.4f}\n\n'
+            + f'H0 (μ=μ0) is TRUE: {h0_counter} (Correct)\n'
+            + f'H1 (μ≠μ0) is TRUE: {h1_counter} (False positive)\n\n'
+            + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
+        )
 
-    # Sample Mean
-    vlines0.remove()
-    vlines0 = ax.vlines([s_mean], [0], [POP_PROB_MAX], color='green', linestyle='dashed', linewidth=3)
+        # Sample Mean
+        vlines0.remove()
+        vlines0 = ax.vlines([s_mean], [0], [POP_PROB_MAX], color='green', linestyle='dashed', linewidth=3)
 
-    # Dashed Lines
-    # vlines1.remove()
-    # vlines1 = ax.vlines(sample, [0] * len(sample), stats.norm.pdf(sample, loc = p_mean, scale = p_std), color='black', linestyle='dashed', linewidth=0.5)
-    # Dots
-    dots.set_data(sample, stats.norm.pdf(sample, loc = POP_MEAN, scale = POP_STD))
+        # Dashed Lines
+        # vlines1.remove()
+        # vlines1 = ax.vlines(sample, [0] * len(sample), stats.norm.pdf(sample, loc = p_mean, scale = p_std), color='black', linestyle='dashed', linewidth=0.5)
+        # Dots
+        dots.set_data(sample, stats.norm.pdf(sample, loc = POP_MEAN, scale = POP_STD))
 
-    # Confidence Interval
-    vlines2.remove()
-    vlines2 = ax.vlines([
-            s_mean - moe, 
-            s_mean + moe
-        ], [
-            0, 
-            0
-        ], [
-            POP_PROB_MAX, 
-            POP_PROB_MAX
-        ], color='blue', linestyle='dashed', linewidth=1)
+        # Confidence Interval
+        vlines2.remove()
+        vlines2 = ax.vlines([
+                s_mean - moe, 
+                s_mean + moe
+            ], [
+                0, 
+                0
+            ], [
+                POP_PROB_MAX, 
+                POP_PROB_MAX
+            ], color='blue', linestyle='dashed', linewidth=1)
 
-    fill[0].remove()
-    fill = ax.fill([
-            s_mean - moe, 
-            s_mean - moe,
-            s_mean + moe,
-            s_mean + moe
-        ], [
-            0, 
-            POP_PROB_MAX,
-            POP_PROB_MAX,
-            0
-        ], alpha=0.4, hatch="//", color='lightblue')
+        fill[0].remove()
+        fill = ax.fill([
+                s_mean - moe, 
+                s_mean - moe,
+                s_mean + moe,
+                s_mean + moe
+            ], [
+                0, 
+                POP_PROB_MAX,
+                POP_PROB_MAX,
+                0
+            ], alpha=0.4, hatch="//", color='lightblue')
 
-    (x < 50 or x == NUMBER_OF_TESTS - 1) and (plt.tight_layout() or plt.pause(0.5))
+        plt.tight_layout()
+        plt.pause(0.5)
 
 plt.tight_layout()
 plt.show()

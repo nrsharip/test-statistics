@@ -58,6 +58,25 @@ ax[0].set_xlim(POP_4_MEAN - 4.2*POP_4_STD, max(POP_1_MEAN + 4.2*POP_1_STD, POP_4
 ax[0].yaxis.set_major_locator(ticker.MultipleLocator(0.01))
 
 text0 = ax[0].text(POP_4_MEAN - 4.0*POP_4_STD, 0.1*POP_1_PROB_MAX, f'')
+text_mu_1 = ax[0].text(POP_1_MEAN, -0.004, f'μ1=μ2=μ3=μ4')
+text_mu_2 = ax[0].text(POP_2_MEAN, -0.004, f'μ1=μ2=μ3=μ4')
+text_mu_3 = ax[0].text(POP_3_MEAN, -0.004, f'μ1=μ2=μ3=μ4')
+text_mu_4 = ax[0].text(POP_4_MEAN, -0.004, f'μ1=μ2=μ3=μ4')
+
+text_x_dash_1 = ax[0].text(0, 0, f'x̄1')
+text_x_dash_2 = ax[0].text(0, 0, f'x̄2')
+text_x_dash_3 = ax[0].text(0, 0, f'x̄3')
+text_x_dash_4 = ax[0].text(0, 0, f'x̄4')
+
+text_s_1_left = ax[0].text(0, 0, f'x̄1-s1')
+text_s_1_rght = ax[0].text(0, 0, f'x̄1+s1')
+text_s_2_left = ax[0].text(0, 0, f'x̄2-s2')
+text_s_2_rght = ax[0].text(0, 0, f'x̄2+s2')
+text_s_3_left = ax[0].text(0, 0, f'x̄3-s3')
+text_s_3_rght = ax[0].text(0, 0, f'x̄3+s3')
+text_s_4_left = ax[0].text(0, 0, f'x̄4-s4')
+text_s_4_rght = ax[0].text(0, 0, f'x̄4+s4')
+
 dots1, = ax[0].plot([], [], 'bo', alpha=1.0)
 dots2, = ax[0].plot([], [], 'go', alpha=1.0)
 dots3, = ax[0].plot([], [], 'mo', alpha=1.0)
@@ -179,6 +198,20 @@ for x in range(NUMBER_OF_TESTS):
             + f'H1 (∃i,j,i≠j: μi≠μj) is TRUE: {h1_counter} (False positive)\n\n'
             + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
         )
+
+        text_x_dash_1.set_position((s1_mean, 1.01 * POP_1_PROB_MAX))
+        text_x_dash_2.set_position((s2_mean, 1.01 * POP_2_PROB_MAX))
+        text_x_dash_3.set_position((s3_mean, 1.01 * POP_3_PROB_MAX))
+        text_x_dash_4.set_position((s4_mean, 1.01 * POP_4_PROB_MAX))
+
+        text_s_1_left.set_position((s1_mean - s1_std, 1.01 * POP_1_PROB_MAX))
+        text_s_1_rght.set_position((s1_mean + s1_std, 1.01 * POP_1_PROB_MAX))
+        text_s_2_left.set_position((s2_mean - s2_std, 1.01 * POP_2_PROB_MAX))
+        text_s_2_rght.set_position((s2_mean + s2_std, 1.01 * POP_2_PROB_MAX))
+        text_s_3_left.set_position((s3_mean - s3_std, 1.01 * POP_3_PROB_MAX))
+        text_s_3_rght.set_position((s3_mean + s3_std, 1.01 * POP_3_PROB_MAX))
+        text_s_4_left.set_position((s4_mean - s4_std, 1.01 * POP_4_PROB_MAX))
+        text_s_4_rght.set_position((s4_mean + s4_std, 1.01 * POP_4_PROB_MAX))
 
         # Sample Means
         vlines1.remove()

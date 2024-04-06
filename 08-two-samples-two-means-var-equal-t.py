@@ -34,6 +34,12 @@ ax.set_xlim(POP_2_MEAN - 5.0*POP_2_STD, POP_1_MEAN + 5.0*POP_1_STD)
 ax.yaxis.set_major_locator(ticker.MultipleLocator(0.01))
 
 text0 = ax.text(POP_1_MEAN + 2*POP_1_STD, POP_1_PROB_MAX * 0.3, f'')
+text_x_dash_1 = ax.text(0, 0, f'x̄1')
+text_x_dash_2 = ax.text(0, 0, f'x̄2')
+text_x_dash_diff = ax.text(0, 0, f'x̄1-x̄2')
+text_mu_1 = ax.text(POP_1_MEAN, -0.004, f'μ1')
+text_mu_2 = ax.text(POP_2_MEAN, -0.004, f'μ2')
+text_mu_diff = ax.text(POP_1_MEAN - POP_2_MEAN, -0.004, f'μ1-μ2')
 dots0, = ax.plot([], [], 'bo', alpha=1.0)
 dots1, = ax.plot([], [], 'go', alpha=1.0)
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)
@@ -99,6 +105,10 @@ for x in range(NUMBER_OF_TESTS):
             + f'H1 (μ1-μ2≠{POP_1_MEAN - POP_2_MEAN:.2f}) is TRUE: {h1_counter} (False positive)\n\n'
             + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
         )
+
+        text_x_dash_1.set_position((s1_mean, -0.004))
+        text_x_dash_2.set_position((s2_mean, -0.004))
+        text_x_dash_diff.set_position((s1_mean-s2_mean, -0.004))
 
         # Sample Means
         vlines0.remove()

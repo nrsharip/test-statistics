@@ -34,11 +34,24 @@ ax.set_xlim(POP_1_MEAN - 4.2*POP_1_STD, POP_2_MEAN + 4.2*POP_2_STD)
 ax.yaxis.set_major_locator(ticker.MultipleLocator(0.01))
 
 text0 = ax.text(POP_1_MEAN - 4*POP_1_STD, POP_1_PROB_MAX * 0.1, f'')
+text_x_dash_1 = ax.text(0, 0, f'x̄1')
+text_x_dash_2 = ax.text(0, 0, f'x̄2')
+text_s_1_left = ax.text(0, 0, f'x̄1-s1')
+text_s_1_rght = ax.text(0, 0, f'x̄1+s1')
+text_s_2_left = ax.text(0, 0, f'x̄2-s2')
+text_s_2_rght = ax.text(0, 0, f'x̄2+s2')
+text_mu_1 = ax.text(POP_1_MEAN, -0.004, f'μ1')
+text_mu_2 = ax.text(POP_2_MEAN, -0.004, f'μ2')
+text_sigma_1_left = ax.text(POP_1_MEAN - POP_1_STD, -0.004, f'μ1-σ1')
+text_sigma_1_rght = ax.text(POP_1_MEAN + POP_1_STD, -0.004, f'μ1+σ1')
+text_sigma_2_left = ax.text(POP_2_MEAN - POP_2_STD, -0.004, f'μ2-σ2')
+text_sigma_2_rght = ax.text(POP_2_MEAN + POP_2_STD, -0.004, f'μ2+σ2')
 dots1, = ax.plot([], [], 'bo', alpha=1.0)
 dots2, = ax.plot([], [], 'go', alpha=1.0)
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines1 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines2 = ax.vlines([], [], [], color='r', alpha=1.0)
+vlines3 = ax.vlines([], [], [], color='r', alpha=1.0)
 fill = ax.fill([], [], 'lightblue', [], [], 'lightblue', alpha=0.4, hatch="X")
 
 # Distribution
@@ -51,41 +64,23 @@ ax.vlines([POP_2_MEAN], [0], [POP_2_PROB_MAX], color='red', linestyle='dashed', 
 ax.vlines([
     POP_1_MEAN - POP_1_STD,
     POP_1_MEAN + POP_1_STD, 
-    POP_2_MEAN - POP_2_STD,
-    POP_2_MEAN + POP_2_STD, 
 ], [
-    0, 
-    0,
     0, 
     0,
 ], [
     POP_1_PROB_MAX, 
     POP_1_PROB_MAX,
+], color='b', linestyle='dashed', linewidth=2)
+ax.vlines([
+    POP_2_MEAN - POP_2_STD,
+    POP_2_MEAN + POP_2_STD, 
+], [
+    0, 
+    0,
+], [
     POP_2_PROB_MAX, 
     POP_2_PROB_MAX,
-], color='blue', linestyle='dashed', linewidth=2)
-# Single Standard Deviation area
-ax.fill([
-    POP_1_MEAN - POP_1_STD, 
-    POP_1_MEAN - POP_1_STD,
-    POP_1_MEAN + POP_1_STD,
-    POP_1_MEAN + POP_1_STD
-], [
-    0, 
-    POP_1_PROB_MAX,
-    POP_1_PROB_MAX,
-    0
-], 'lightblue', [
-    POP_2_MEAN - POP_2_STD, 
-    POP_2_MEAN - POP_2_STD,
-    POP_2_MEAN + POP_2_STD,
-    POP_2_MEAN + POP_2_STD
-], [
-    0, 
-    POP_2_PROB_MAX,
-    POP_2_PROB_MAX,
-    0
-], 'lightblue', alpha=0.4, hatch="\\\\", edgecolor='lightblue')
+], color='g', linestyle='dashed', linewidth=2)
 
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.f.html
 # alpha divide by 2 - two-tailed test LEFT
@@ -134,9 +129,18 @@ for x in range(NUMBER_OF_TESTS):
             + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
         )
 
+        text_x_dash_1.set_position((s1_mean, 1.01 * POP_1_PROB_MAX))
+        text_x_dash_2.set_position((s2_mean, 1.01 * POP_2_PROB_MAX))
+        text_s_1_left.set_position((s1_mean - s1_std, 1.01 * POP_1_PROB_MAX))
+        text_s_1_rght.set_position((s1_mean + s1_std, 1.01 * POP_1_PROB_MAX))
+        text_s_2_left.set_position((s2_mean - s2_std, 1.01 * POP_2_PROB_MAX))
+        text_s_2_rght.set_position((s2_mean + s2_std, 1.01 * POP_2_PROB_MAX))
+
         # # Sample Mean
-        # vlines0.remove()
-        # vlines0 = ax.vlines([s_mean], [0], [POP_PROB_MAX], color='green', linestyle='dashed', linewidth=3)
+        vlines0.remove()
+        vlines0 = ax.vlines([s1_mean], [0], [POP_1_PROB_MAX], color='b', linestyle='dashed', linewidth=3)
+        vlines1.remove()
+        vlines1 = ax.vlines([s2_mean], [0], [POP_2_PROB_MAX], color='g', linestyle='dashed', linewidth=3)
 
         # Dots
         dots1.set_data(sample1, stats.norm.pdf(sample1, loc = POP_1_MEAN, scale = POP_1_STD))
@@ -147,19 +151,24 @@ for x in range(NUMBER_OF_TESTS):
         vlines2 = ax.vlines([
                 s1_mean - s1_std, 
                 s1_mean + s1_std, 
+            ], [
+                0, 
+                0,
+            ], [
+                POP_1_PROB_MAX, 
+                POP_1_PROB_MAX,
+            ], color='b', linestyle='dashed', linewidth=1)
+        vlines3.remove()
+        vlines3 = ax.vlines([
                 s2_mean - s2_std, 
                 s2_mean + s2_std, 
             ], [
                 0, 
                 0,
-                0,
-                0
             ], [
-                POP_1_PROB_MAX, 
-                POP_1_PROB_MAX,
                 POP_2_PROB_MAX, 
-                POP_2_PROB_MAX
-            ], color='blue', linestyle='dashed', linewidth=1)
+                POP_2_PROB_MAX,
+            ], color='g', linestyle='dashed', linewidth=1)
 
         fill[0].remove()
         fill[1].remove()
@@ -173,7 +182,7 @@ for x in range(NUMBER_OF_TESTS):
                 POP_1_PROB_MAX,
                 POP_1_PROB_MAX,
                 0
-            ], 'lightgreen', [
+            ], 'lightblue', [
                 s2_mean - s2_std,
                 s2_mean - s2_std,
                 s2_mean + s2_std,
@@ -183,7 +192,7 @@ for x in range(NUMBER_OF_TESTS):
                 POP_2_PROB_MAX,
                 POP_2_PROB_MAX,
                 0
-            ], 'lightgreen', alpha=0.4, hatch="//", edgecolor='lightgreen'
+            ], 'lightgreen', alpha=0.2, hatch="//", edgecolor='lightgreen'
         )
 
         plt.tight_layout()

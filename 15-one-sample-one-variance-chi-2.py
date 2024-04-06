@@ -23,6 +23,9 @@ ax.set_xlim(POP_MEAN - 4.2*POP_STD, POP_MEAN + 4.2*POP_STD)
 ax.yaxis.set_major_locator(ticker.MultipleLocator(0.01))
 
 text0 = ax.text(POP_MEAN - 4*POP_STD, POP_PROB_MAX * 0.5, f'')
+text_mu = ax.text(POP_MEAN, -0.004, f'μ0')
+text_sigma_left = ax.text(POP_MEAN - POP_STD, -0.004, f'μ0-σ0')
+text_sigma_rght = ax.text(POP_MEAN + POP_STD, -0.004, f'μ0+σ0')
 dots, = ax.plot([], [], 'bo', alpha=1.0)
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines1 = ax.vlines([], [], [], color='r', alpha=1.0)
@@ -83,8 +86,8 @@ for x in range(NUMBER_OF_TESTS):
             f'Significance Level (α): {ALPHA * 100:.2f} % \n'
             + f'χ²(α={ALPHA/2:.4f}, df={SAMPLE_SIZE-1}) Two-Tailed LEFT: {chi2_alpha_left:.6f} \n'
             + f'χ²(α={1-ALPHA/2:.4f}, df={SAMPLE_SIZE-1}) Two-Tailed RIGHT: {chi2_alpha_rght:.6f} \n\n'
-            + f'Population Mean (μ): {POP_MEAN:.4f} \n' 
-            + f'Population Standard Deviation (σ): {POP_STD:.4f}\n\n'
+            + f'Population Mean (μ0): {POP_MEAN:.4f} \n' 
+            + f'Population Standard Deviation (σ0): {POP_STD:.4f}\n\n'
             + f'Sample Size (n): {SAMPLE_SIZE}\n'
             + f'Sample Mean (x̄): {s_mean:.4f} \n'
             + f'Sample Standard Deviation (s): {s_std:.4f}\n\n'

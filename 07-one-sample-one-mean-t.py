@@ -23,6 +23,8 @@ ax.set_xlim(POP_MEAN - 4.5*POP_STD, POP_MEAN + 4.5*POP_STD)
 ax.yaxis.set_major_locator(ticker.MultipleLocator(0.01))
 
 text0 = ax.text(POP_MEAN - 4*POP_STD, POP_PROB_MAX * 0.5, f'')
+text_x_dash = ax.text(0, 0, f'x̄')
+text_mu = ax.text(POP_MEAN, -0.004, f'μ0')
 dots, = ax.plot([], [], 'bo', alpha=1.0)
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines1 = ax.vlines([], [], [], color='r', alpha=1.0)
@@ -74,8 +76,8 @@ for x in range(NUMBER_OF_TESTS):
         text0.set_text(
             f'Significance Level (α): {ALPHA * 100:.2f} % \n'
             + f'T({ALPHA:.2f},df={SAMPLE_SIZE - 1}) Two-Tailed: {t_alpha:.6f}\n\n'
-            + f'Population Mean (μ): {POP_MEAN:.4f} \n'
-            + f'Population Standard Deviation (σ): {POP_STD:.4f}\n\n'
+            + f'Population Mean (μ0): {POP_MEAN:.4f} \n'
+            + f'Population Standard Deviation (σ0): {POP_STD:.4f}\n\n'
             + f'Sample Size (n): {SAMPLE_SIZE}\n'
             + f'Sample Mean (x̄): {s_mean:.4f} \n'
             + f'Sample Standard Deviation (s): {s_std:.4f}\n\n'
@@ -83,6 +85,8 @@ for x in range(NUMBER_OF_TESTS):
             + f'H1 (μ≠μ0) is TRUE: {h1_counter} (False positive)\n\n'
             + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
         )
+
+        text_x_dash.set_position((s_mean, -0.004))
 
         # Sample Mean
         vlines0.remove()

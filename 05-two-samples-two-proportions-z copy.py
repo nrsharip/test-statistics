@@ -52,6 +52,12 @@ ax.yaxis.set_major_locator(ticker.MultipleLocator(PROB_MAX * 0.1))
 # ax.set_yscale("log")
 
 text0 = ax.text(0.05, PROB_MAX * 0.5, f'')
+text_p_dash_1 = ax.text(0, 0, f'p̄1')
+text_p_dash_2 = ax.text(0, 0, f'p̄2')
+text_p_dash_diff = ax.text(0, 0, f'p̄1-p̄2')
+text_p_1 = ax.text(P_1_PROPORTION, -0.004, f'p1')
+text_p_2 = ax.text(P_2_PROPORTION, -0.004, f'p2')
+text_p_diff = ax.text(P_1_PROPORTION-P_2_PROPORTION, -0.004, f'p1-p2')
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines1 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines2 = ax.vlines([], [], [], color='r', alpha=1.0)
@@ -113,6 +119,10 @@ for i, x in enumerate(binom_randoms):
 
             + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
         )
+
+        text_p_dash_1.set_position((s1_proportion, -0.004))
+        text_p_dash_2.set_position((s2_proportion, -0.004))
+        text_p_dash_diff.set_position((s1_proportion - s2_proportion, -0.004))
 
         # Sample Mean
         vlines0.remove()

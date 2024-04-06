@@ -10,7 +10,7 @@ import math
 ALPHA = 0.05
 P_SIZE = 10000
 S_SIZE = 40 # 40 200 1000
-P_PROPORTION = 0.2
+P_PROPORTION = 0.4
 NUMBER_OF_TESTS = 1000
 
 POP_PROB_DENS_X = np.arange(0, P_SIZE + 1)
@@ -38,6 +38,8 @@ ax.yaxis.set_major_locator(ticker.MultipleLocator(PROB_MAX * 0.1))
 # ax.set_yscale("log")
 
 text0 = ax.text(1.75 * P_PROPORTION, PROB_MAX * 0.5, f'')
+text_p_dash = ax.text(0, 0, f'p̄')
+text_p = ax.text(P_PROPORTION, -0.004, f'p0')
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines2 = ax.vlines([], [], [], color='r', alpha=1.0)
 fill = ax.fill([], [], alpha=0.4, hatch="X", color='lightblue')
@@ -58,7 +60,7 @@ for i, x in enumerate(stats.binom.rvs(size=NUMBER_OF_TESTS, n = S_SIZE, p = P_PR
     # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html
     z_alpha = stats.norm.ppf(1 - ALPHA/2) # alpha divide by 2 - two-tailed test
 
-    moe = z_alpha * math.sqrt(s_proportion * (1 - s_proportion) / S_SIZE)
+    moe = z_alpha * math.sqrt(P_PROPORTION * (1 - P_PROPORTION) / S_SIZE)
 
     if (s_proportion - moe) <= P_PROPORTION and P_PROPORTION <= (s_proportion + moe):
         h0_counter += 1
@@ -74,10 +76,12 @@ for i, x in enumerate(stats.binom.rvs(size=NUMBER_OF_TESTS, n = S_SIZE, p = P_PR
             + f'Sample Size : {S_SIZE} \n'
             + f'Sample Proportion (p̄): {s_proportion:.4f} \n\n'
             + f'Margin of Error (MOE): {moe:.4f} \n\n'
-            + f'H0 (p̄=p0) is TRUE: {h0_counter} (Correct)\n'
-            + f'H1 (p̄≠p0) is TRUE: {h1_counter} (False positive)\n\n'
+            + f'H0 (p=p0) is TRUE: {h0_counter} (Correct)\n'
+            + f'H1 (p≠p0) is TRUE: {h1_counter} (False positive)\n\n'
             + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
         )
+
+        text_p_dash.set_position((s_proportion, -0.004))
 
         # Sample Mean
         vlines0.remove()

@@ -22,7 +22,7 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(1.0))
 ax.set_xlim(POP_MEAN - 4.2*POP_STD, POP_MEAN + 4.2*POP_STD)
 ax.yaxis.set_major_locator(ticker.MultipleLocator(0.01))
 
-text0 = ax.text(POP_MEAN - 4*POP_STD, POP_PROB_MAX * 0.5, f'', fontsize=12)
+text0 = ax.text(POP_MEAN - 4*POP_STD, POP_PROB_MAX * 0.5, f'')
 dots, = ax.plot([], [], 'bo', alpha=1.0)
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines1 = ax.vlines([], [], [], color='r', alpha=1.0)

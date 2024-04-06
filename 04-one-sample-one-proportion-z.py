@@ -37,7 +37,7 @@ ax.yaxis.set_major_locator(ticker.MultipleLocator(PROB_MAX * 0.1))
 # ax.set_ylim(-0.2, 0.2)
 # ax.set_yscale("log")
 
-text0 = ax.text(1.75 * P_PROPORTION, PROB_MAX * 0.5, f'', fontsize=12)
+text0 = ax.text(1.75 * P_PROPORTION, PROB_MAX * 0.5, f'')
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)
 vlines2 = ax.vlines([], [], [], color='r', alpha=1.0)
 fill = ax.fill([], [], alpha=0.4, hatch="X", color='lightblue')

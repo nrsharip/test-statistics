@@ -9,8 +9,8 @@ ALPHA = 0.05
 
 NUMBER_OF_TESTS = 1000
 
-POP_1_MEAN = 10
-POP_1_STD = 2
+POP_1_MEAN = 10 # 10 15
+POP_1_STD = 2 # 2 4
 SAMPLE_1_SIZE = 10
 
 POP_2_MEAN = 10
@@ -33,7 +33,7 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(1.0))
 ax.set_xlim(POP_2_MEAN - 4.2*POP_2_STD, POP_2_MEAN + 4.2*POP_2_STD)
 ax.yaxis.set_major_locator(ticker.MultipleLocator(0.01))
 
-text0 = ax.text(POP_2_MEAN + 2*POP_2_STD, POP_2_PROB_MAX * 0.5, f'')
+text0 = ax.text(POP_2_MEAN + 2*POP_2_STD, POP_2_PROB_MAX * 0.3, f'')
 dots0, = ax.plot([], [], 'bo', alpha=1.0)
 dots1, = ax.plot([], [], 'go', alpha=1.0)
 vlines0 = ax.vlines([], [], [], color='r', alpha=1.0)

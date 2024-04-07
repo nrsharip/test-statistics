@@ -60,7 +60,7 @@ for i, x in enumerate(stats.binom.rvs(size=NUMBER_OF_TESTS, n = S_SIZE, p = P_PR
     # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html
     z_alpha = stats.norm.ppf(1 - ALPHA/2) # alpha divide by 2 - two-tailed test
 
-    moe = z_alpha * math.sqrt(P_PROPORTION * (1 - P_PROPORTION) / S_SIZE)
+    moe = z_alpha * math.sqrt(s_proportion * (1 - s_proportion) / S_SIZE)
 
     if (s_proportion - moe) <= P_PROPORTION and P_PROPORTION <= (s_proportion + moe):
         h0_counter += 1

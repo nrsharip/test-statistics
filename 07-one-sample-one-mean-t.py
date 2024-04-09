@@ -75,7 +75,7 @@ for x in range(NUMBER_OF_TESTS):
     if x < 50 or x == NUMBER_OF_TESTS - 1:
         text0.set_text(
             f'Significance Level (α): {ALPHA * 100:.2f} % \n'
-            + f'T({ALPHA:.2f},df={SAMPLE_SIZE - 1}) Two-Tailed: {t_alpha:.6f}\n\n'
+            + f'T({1 - ALPHA/2:.3f},df={SAMPLE_SIZE - 1}) Two-Tailed: {t_alpha:.6f}\n\n'
             + f'Population Mean (μ0): {POP_MEAN:.4f} \n'
             + f'Population Standard Deviation (σ0): {POP_STD:.4f}\n\n'
             + f'Sample Size (n): {SAMPLE_SIZE}\n'

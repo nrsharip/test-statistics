@@ -102,7 +102,7 @@ for i, x in enumerate(binom_randoms):
     if i < 50 or i == NUMBER_OF_TESTS - 1:
         text0.set_text(
             f'Significance Level (α): {ALPHA * 100:.2f} % \n' 
-            + f'Z({ALPHA:.2f}) Two-Tailed: {z_alpha:.6f}\n\n'
+            + f'Z({1 - ALPHA/2:.3f}) Two-Tailed: {z_alpha:.6f}\n\n'
 
             + f'Population Proportion (p1): {P_1_PROPORTION:.4f} \n'
             + f'Population Proportion (p2): {P_2_PROPORTION:.4f} \n\n'

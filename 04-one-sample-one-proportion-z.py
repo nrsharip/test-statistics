@@ -70,7 +70,7 @@ for i, x in enumerate(stats.binom.rvs(size=NUMBER_OF_TESTS, n = S_SIZE, p = P_PR
     if i < 50 or i == NUMBER_OF_TESTS - 1:
         text0.set_text(
             f'Significance Level (α): {ALPHA * 100:.2f} % \n' 
-            + f'Z({ALPHA:.2f}) Two-Tailed: {z_alpha:.6f}\n\n'
+            + f'Z({1 - ALPHA/2:.3f}) Two-Tailed: {z_alpha:.6f}\n\n'
             + f'Population Size : {P_SIZE} \n'
             + f'Population Proportion (p0): {P_PROPORTION:.4f} \n\n'
             + f'Sample Size : {S_SIZE} \n'

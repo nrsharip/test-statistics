@@ -37,7 +37,8 @@ text0 = ax.text(POP_2_MEAN + 2*POP_2_STD, POP_2_PROB_MAX * 0.3, f'')
 text_x_dash_1 = ax.text(0, 0, f'x̄1')
 text_x_dash_2 = ax.text(0, 0, f'x̄2')
 text_x_dash_diff = ax.text(0, 0, f'x̄1-x̄2')
-text_mu = ax.text(POP_1_MEAN, -0.004, f'μ1=μ2')
+text_mu_1 = ax.text(POP_1_MEAN, -0.008, f'μ1=μ2')
+# text_mu_2 = ax.text(POP_2_MEAN, -0.008, f'μ2')
 text_mu_diff = ax.text(POP_1_MEAN - POP_2_MEAN, -0.004, f'μ1-μ2')
 dots0, = ax.plot([], [], 'bo', alpha=1.0)
 dots1, = ax.plot([], [], 'go', alpha=1.0)
@@ -91,7 +92,7 @@ for x in range(NUMBER_OF_TESTS):
             + f'Z({1 - ALPHA/2:.3f}) Two-Tailed: {z_alpha:.6f} \n\n'
             + f'Population Mean (μ1): {POP_1_MEAN:.4f} \n'
             + f'Population Mean (μ2): {POP_2_MEAN:.4f} \n'
-            + f'Population Standard Deviation (σ1): {POP_1_STD:.4f}\n\n'
+            + f'Population Standard Deviation (σ1): {POP_1_STD:.4f}\n'
             + f'Population Standard Deviation (σ2): {POP_2_STD:.4f}\n\n'
             + f'Sample Size 1 (n1): {SAMPLE_1_SIZE}\n'
             + f'Sample Size 2 (n2): {SAMPLE_2_SIZE}\n'
@@ -104,9 +105,9 @@ for x in range(NUMBER_OF_TESTS):
             + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
         )
 
-        text_x_dash_1.set_position((s1_mean, -0.004))
-        text_x_dash_2.set_position((s2_mean, -0.004))
-        text_x_dash_diff.set_position((s1_mean-s2_mean, -0.004))
+        text_x_dash_1.set_position((s1_mean, POP_1_PROB_MAX))
+        text_x_dash_2.set_position((s2_mean, POP_2_PROB_MAX))
+        text_x_dash_diff.set_position((s1_mean-s2_mean, min(POP_1_PROB_MAX, POP_2_PROB_MAX)))
 
         # Sample Means
         vlines0.remove()

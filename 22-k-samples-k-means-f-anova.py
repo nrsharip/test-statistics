@@ -14,19 +14,19 @@ NUMBER_OF_TESTS = 1000
 
 POP_1_MEAN = 10 # 10 25
 POP_1_STD = 2
-SAMPLE_1_SIZE = 25
+SAMPLE_1_SIZE = 5
 
 POP_2_MEAN = 10 # 10 20
 POP_2_STD = 3
-SAMPLE_2_SIZE = 50
+SAMPLE_2_SIZE = 10
 
 POP_3_MEAN = 10 # 10 15
 POP_3_STD = 4
-SAMPLE_3_SIZE = 75
+SAMPLE_3_SIZE = 15
 
 POP_4_MEAN = 10
 POP_4_STD = 6
-SAMPLE_4_SIZE = 100
+SAMPLE_4_SIZE = 20
 
 N = SAMPLE_1_SIZE + SAMPLE_2_SIZE + SAMPLE_3_SIZE + SAMPLE_4_SIZE
 K = 4
@@ -57,7 +57,7 @@ ax[0].xaxis.set_major_locator(ticker.MultipleLocator(1.0))
 ax[0].set_xlim(POP_4_MEAN - 4.2*POP_4_STD, max(POP_1_MEAN + 4.2*POP_1_STD, POP_4_MEAN + 4.2*POP_4_STD))
 ax[0].yaxis.set_major_locator(ticker.MultipleLocator(0.01))
 
-text0 = ax[0].text(POP_4_MEAN - 4.0*POP_4_STD, 0.1*POP_1_PROB_MAX, f'')
+text0 = ax[0].text(POP_4_MEAN - 4.0*POP_4_STD, 0.02*POP_1_PROB_MAX, f'', fontsize=7)
 text_mu_1 = ax[0].text(POP_1_MEAN, -0.004, f'μ1=μ2=μ3=μ4')
 text_mu_2 = ax[0].text(POP_2_MEAN, -0.004, f'μ1=μ2=μ3=μ4')
 text_mu_3 = ax[0].text(POP_3_MEAN, -0.004, f'μ1=μ2=μ3=μ4')
@@ -189,6 +189,16 @@ for x in range(NUMBER_OF_TESTS):
             f'Significance Level (α): {ALPHA * 100:.2f} % \n'
             + f'F({ALPHA/2:.4f}, d1={K - 1}, d2={N - K}) Two-Tailed Left: {f_alpha_left:.6f} \n'
             + f'F({1-ALPHA/2:.4f}, d1={K - 1}, d2={N - K}) Two-Tailed Right: {f_alpha_rght:.6f} \n\n'
+
+            + f'Population Mean (μ1): {POP_1_MEAN:.4f} \n'
+            + f'Population Mean (μ2): {POP_2_MEAN:.4f} \n'
+            + f'Population Mean (μ3): {POP_3_MEAN:.4f} \n'
+            + f'Population Mean (μ4): {POP_4_MEAN:.4f} \n'
+            + f'Population Standard Deviation (σ1): {POP_1_STD:.4f}\n'
+            + f'Population Standard Deviation (σ2): {POP_2_STD:.4f}\n'
+            + f'Population Standard Deviation (σ3): {POP_3_STD:.4f}\n'
+            + f'Population Standard Deviation (σ4): {POP_4_STD:.4f}\n\n'
+
             + f'S I - squared (Residual): {S_I_squared:.4f}\n'
             + f'S II - squared (Sample): {S_II_squared:.4f}\n\n'
             + f'Ratio: {ratio:.6f}\n\n'
@@ -197,6 +207,9 @@ for x in range(NUMBER_OF_TESTS):
             + f'H0 (μ1=μ2=μ3=μ4) is TRUE: {h0_counter} (Correct)\n'
             + f'H1 (∃i,j,i≠j: μi≠μj) is TRUE: {h1_counter} (False positive)\n\n'
             + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
+            # + f'H0 (μ1=μ2=μ3=μ4) is TRUE: {h0_counter} (False negative)\n'
+            # + f'H1 (∃i,j,i≠j: μi≠μj) is TRUE: {h1_counter} (Correct)\n\n'
+            # + f'Actuall Type II Error Percent: {100 * h0_counter / (h0_counter + h1_counter):.2f} %'
         )
 
         text_x_dash_1.set_position((s1_mean, 1.01 * POP_1_PROB_MAX))

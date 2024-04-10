@@ -13,7 +13,7 @@ P_1_SIZE = 10000
 P_2_SIZE = 10000
 
 S_1_SIZE = 40 # 40 200 1000
-S_2_SIZE = 200 # 40 200 1000
+S_2_SIZE = 100 # 100 400 500
 
 P_1_PROPORTION = 0.7 # 0.7 0.5
 P_2_PROPORTION = 0.5
@@ -51,7 +51,7 @@ ax.yaxis.set_major_locator(ticker.MultipleLocator(PROB_MAX * 0.1))
 # ax.set_ylim(-0.2, 0.2)
 # ax.set_yscale("log")
 
-text0 = ax.text(0.05, PROB_MAX * 0.5, f'')
+text0 = ax.text(0.05, PROB_MAX * 0.5, f'', fontsize=9)
 text_p_dash_1 = ax.text(0, 0, f'p̄1')
 text_p_dash_2 = ax.text(0, 0, f'p̄2')
 text_p_dash_diff = ax.text(0, 0, f'p̄1-p̄2')
@@ -120,9 +120,9 @@ for i, x in enumerate(binom_randoms):
             + f'Actuall Type I Error Percent: {100 * h1_counter / (h0_counter + h1_counter):.2f} %'
         )
 
-        text_p_dash_1.set_position((s1_proportion, -0.004))
-        text_p_dash_2.set_position((s2_proportion, -0.004))
-        text_p_dash_diff.set_position((s1_proportion - s2_proportion, -0.004))
+        text_p_dash_1.set_position((s1_proportion, SAM_1_PROB_MAX))
+        text_p_dash_2.set_position((s2_proportion, SAM_2_PROB_MAX))
+        text_p_dash_diff.set_position((s1_proportion - s2_proportion, PROB_MIN))
 
         # Sample Mean
         vlines0.remove()
